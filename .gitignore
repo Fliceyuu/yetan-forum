@@ -1,0 +1,27 @@
+# 数据库（含 WAL/SHM）
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# 用户上传：只保留占位文件
+uploads/*
+!uploads/.gitkeep
+
+# 测试残留与临时目录
+uploads-test/
+.scratch/
+.verifyforum/
+
+# 依赖与本机运行时（Termux 版 Bun）
+node_modules/
+root/
+
+# 日志与系统文件
+srv.log
+*.log
+.DS_Store
+
+# 本地环境变量（含真实域名/邮箱，绝不入库）
+.env
+.env.local
+.env.*.local
