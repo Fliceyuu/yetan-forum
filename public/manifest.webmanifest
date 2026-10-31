@@ -1,0 +1,26 @@
+{
+  "name": "夜谭 · 灵异玄学经历社区",
+  "short_name": "夜谭",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#08090c",
+  "theme_color": "#08090c",
+  "lang": "zh-CN",
+  "description": "一个只收集亲历的地方：撞邪、梦魇、旧屋、风水、玄门、心证。",
+  "categories": ["social", "entertainment"],
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "写一段经历", "url": "/new", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "同城经历", "url": "/map" },
+    { "name": "有人回应你", "url": "/notifications" }
+  ]
+}
