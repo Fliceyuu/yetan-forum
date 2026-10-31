@@ -1,0 +1,18 @@
+{
+  "name": "yetan-forum",
+  "version": "1.0.0",
+  "description": "夜谭 · 灵异与玄学经历社区（Bun + SQLite + 原生前端，零构建）",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun run src/server.js",
+    "dev": "bun --watch src/server.js",
+    "seed": "bun run src/seed.js",
+    "seed:force": "bun run src/seed.js --force",
+    "test": "bun test"
+  },
+  "engines": {
+    "bun": ">=1.1.0"
+  },
+  "license": "MIT"
+}
