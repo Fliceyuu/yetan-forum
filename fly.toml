@@ -1,0 +1,44 @@
+# 夜谭 · Fly.io 配置（自带持久卷 + 自动 HTTPS，最省心的免费方案之一）
+#
+#   fly launch --no-deploy --copy-config
+#   fly volumes create yetan_data --size 1
+#   fly secrets set DEMO_MODE=0 POST_NEEDS_REVIEW=1
+#   fly deploy
+
+app = "yetan-forum"
+primary_region = "sin"   # 新加坡，国内访问较快
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "3000"
+  HOST = "0.0.0.0"
+  DB_PATH = "/data/forum.db"
+  UPLOAD_DIR = "/data/uploads"
+  TRUST_PROXY = "1"
+  DEMO_MODE = "0"
+  POST_NEEDS_REVIEW = "1"
+  SITE_NAME = "夜谭"
+
+[[mounts]]
+  source = "yetan_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "suspend"   # 没人访问时休眠，省钱
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "15s"
+    method = "GET"
+    path = "/healthz"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
