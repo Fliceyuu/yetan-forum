@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <radialGradient id="g" cx="40%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#f6d7b0"/>
+      <stop offset="1" stop-color="#f6d7b0" stop-opacity="0.65"/>
+    </radialGradient>
+    <filter id="s"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.25"/></filter>
+  </defs>
+  <rect width="240" height="240" rx="28" fill="url(#g)"/>
+  <circle cx="120" cy="112" r="72" fill="#fff" opacity="0.55"/>
+  <text x="120" y="140" font-size="86" text-anchor="middle" filter="url(#s)">😅</text>
+  <text x="120" y="212" font-size="26" text-anchor="middle" fill="#2b2b33" font-family="serif" opacity="0.8">汗</text>
+</svg>
