@@ -1,0 +1,59 @@
+# 夜谭 · 生产部署（一键起 App + 自动 HTTPS）
+#
+#   1. 把 .env.example 复制成 .env，填 DOMAIN / ACME_EMAIL，并把 DEMO_MODE 改成 0
+#   2. 域名 A 记录指向这台服务器
+#   3. docker compose up -d
+#
+# 数据（SQLite + 上传）放在命名卷里，重建容器不会丢。
+
+services:
+  app:
+    build: .
+    image: yetan-forum:latest
+    restart: unless-stopped
+    environment:
+      # 生产默认：关演示账号、开审核、信任代理
+      DEMO_MODE: ${DEMO_MODE:-0}
+      POST_NEEDS_REVIEW: ${POST_NEEDS_REVIEW:-1}
+      TRUST_PROXY: "1"
+      SESSION_DAYS: ${SESSION_DAYS:-30}
+      DB_PATH: /data/forum.db
+      UPLOAD_DIR: /data/uploads
+      MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES:-8388608}
+      MAX_FILES_PER_POST: ${MAX_FILES_PER_POST:-6}
+      SITE_NAME: ${SITE_NAME:-夜谭}
+      SEED: ${SEED:-0}
+    volumes:
+      - yetan-data:/data
+    # 不对公网暴露端口：所有流量经 Caddy
+    expose:
+      - "3000"
+    healthcheck:
+      test: ["CMD", "bun", "-e", "fetch('http://127.0.0.1:3000/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"   # HTTP/3
+    environment:
+      DOMAIN: ${DOMAIN:?请在 .env 里设置 DOMAIN}
+      ACME_EMAIL: ${ACME_EMAIL:-}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  yetan-data:
+  caddy-data:
+  caddy-config:
