@@ -1,0 +1,31 @@
+# 夜谭 · Render 一键部署配置
+# 把你自己的域名绑上后自动签 HTTPS 证书，PWA 可以直接安装。
+
+services:
+  - type: web
+    name: yetan-forum
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: DEMO_MODE
+        value: "0"
+      - key: POST_NEEDS_REVIEW
+        value: "1"
+      - key: TRUST_PROXY
+        value: "1"
+      - key: DB_PATH
+        value: /data/forum.db
+      - key: UPLOAD_DIR
+        value: /data/uploads
+      - key: SITE_NAME
+        value: 夜谭
+    # 注意：Render 的免费实例磁盘不是持久的。
+    # 要长期保留数据和上传，必须挂持久磁盘（付费）或改用下面的 fly.toml 方案。
+    # disk:
+    #   name: yetan-data
+    #   mountPath: /data
+    #   sizeGB: 1
