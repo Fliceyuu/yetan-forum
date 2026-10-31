@@ -1,0 +1,46 @@
+# 夜谭 · Caddy 反向代理配置（自动申请并续期 Let's Encrypt 证书）
+#
+# 用法：把 DOMAIN 换成你的域名，DNS 的 A 记录指向服务器 IP，
+# 然后 `docker compose up -d`。Caddy 会自动完成 HTTPS，无需手动搞证书。
+#
+# PWA 必须 HTTPS 才能安装，所以这一层不只是加密，是功能前提。
+
+{
+	# 出错时用邮箱接收证书到期提醒（改成你自己的邮箱）
+	email {$ACME_EMAIL}
+}
+
+{$DOMAIN:localhost} {
+	encode zstd gzip
+
+	# 安全头：和 App 自身输出的一致，代理层再兜一层
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "same-origin"
+		-Server
+	}
+
+	# Service Worker 与 manifest 绝不能被长缓存，否则用户永远拿不到新版本
+	@sw path /sw.js /manifest.webmanifest
+	header @sw Cache-Control "no-cache, no-store, must-revalidate"
+
+	# 上传的图片可以长缓存（文件名是随机的，内容不会变）
+	@uploads path /uploads/*
+	header @uploads Cache-Control "public, max-age=31536000, immutable"
+
+	reverse_proxy app:3000 {
+		# 传真实客户端 IP 给 App（TRUST_PROXY=1 时会用）
+		header_up X-Real-IP {remote_host}
+	}
+
+	log {
+		# 日志目录挂的是 caddy-data 卷，容器重建不丢
+		output file /data/caddy/access.log {
+			roll_size 10mb
+			roll_keep 5
+		}
+		format json
+	}
+}
