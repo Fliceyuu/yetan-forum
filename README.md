@@ -2,6 +2,8 @@
 
 > 把说不出口的经历，留在这里。
 
+**[🌙 在线查看网页版](https://fliceyuu.github.io/yetan-forum/)** · [部署指南](DEPLOY.md) · [GitHub](https://github.com/Fliceyuu/yetan-forum)
+
 [![CI](https://github.com/Fliceyuu/yetan-forum/actions/workflows/ci.yml/badge.svg)](https://github.com/Fliceyuu/yetan-forum/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
 [![Bun](https://img.shields.io/badge/Bun-%E2%89%A51.1-f9f1e1?logo=bun)](https://bun.sh)
@@ -60,6 +62,18 @@ bun run src/server.js     # http://localhost:3000
 ```
 
 环境变量见 `.env.example`（Bun 会自动读取 `.env`）。
+
+### 网页版（无需服务器）
+
+`docs/` 目录是一个**纯静态**版本，内容在构建时固化，可以直接挂到任何静态托管上：
+
+```bash
+bun tools/export-static.js   # 从数据库导出 docs/data.json
+```
+
+线上地址：**https://fliceyuu.github.io/yetan-forum/**（GitHub Pages，源为 `main` 分支 `/docs`）
+
+它只读：能浏览、搜索、按分类筛选、看区级地图，但不能注册发帖——那需要下面的完整后端。
 
 ### 部署上线（自动 HTTPS，手机可安装）
 
