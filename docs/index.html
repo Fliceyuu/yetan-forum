@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>夜谭 · 灵异与玄学经历社区</title>
+<meta name="description" content="把说不出口的经历，留在这里。一个专注亲历故事的社区：照片去元数据、地点只到区级。">
+<meta name="theme-color" content="#0e0e12">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="stylesheet" href="./styles.css">
+<style>
+  /* 静态站专用：只补少量布局，其余完全复用主样式 */
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 16px 96px; }
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .topbar-in {
+    max-width: 720px; margin: 0 auto; padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .logo { font-family: var(--serif); font-size: 20px; letter-spacing: .12em; }
+  .logo small { font-size: 11px; opacity: .5; letter-spacing: 0; margin-left: 8px; }
+  .topbar .spacer { flex: 1; }
+  .notice {
+    font-size: 12px; line-height: 1.7; opacity: .62;
+    border: 1px dashed var(--line); border-radius: var(--radius);
+    padding: 10px 12px; margin: 16px 0;
+  }
+  .notice b { color: var(--amber, #c9a227); font-weight: 600; }
+  .hero { padding: 28px 0 8px; }
+  .hero h1 {
+    font-family: var(--serif); font-size: 30px; line-height: 1.3;
+    margin: 0 0 8px; letter-spacing: .04em;
+  }
+  .hero p { margin: 0; opacity: .6; font-size: 14px; }
+  .chips { display: flex; gap: 8px; overflow-x: auto; padding: 16px 0 4px; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip.on { background: var(--blood); border-color: var(--blood); color: #fff; }
+  .post-card { display: block; text-decoration: none; color: inherit; margin-bottom: 12px; }
+  .post-card h3 { font-family: var(--serif); font-size: 17px; margin: 0 0 8px; line-height: 1.45; }
+  .post-card .excerpt {
+    font-size: 13.5px; line-height: 1.75; opacity: .66; margin: 0 0 10px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; opacity: .5; align-items: center; }
+  .tag { font-size: 12px; color: var(--blood); opacity: .85; }
+  .badge {
+    font-size: 11px; padding: 1px 7px; border-radius: 999px;
+    border: 1px solid var(--line); opacity: .75;
+  }
+  .empty { text-align: center; padding: 60px 0; opacity: .4; font-size: 14px; }
+  .foot { text-align: center; font-size: 12px; opacity: .35; padding: 40px 0 0; line-height: 1.9; }
+  /* 详情页 */
+  .detail h1 { font-family: var(--serif); font-size: 24px; line-height: 1.4; margin: 20px 0 12px; }
+  .detail .body { font-size: 15px; line-height: 2; white-space: pre-wrap; margin: 20px 0; }
+  .detail .body p { margin: 0 0 1.2em; }
+  .comment { padding: 14px 0; border-top: 1px solid var(--line-soft); }
+  .comment .who { font-size: 12.5px; opacity: .55; margin-bottom: 6px; }
+  .comment .txt { font-size: 14px; line-height: 1.85; white-space: pre-wrap; }
+  .comment.reply { margin-left: 20px; padding-left: 14px; border-left: 1px solid var(--line-soft); }
+  .back { font-size: 13px; opacity: .55; text-decoration: none; color: inherit; }
+  .search {
+    width: 100%; box-sizing: border-box; padding: 11px 14px; font-size: 14px;
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--line); border-radius: var(--radius); outline: none;
+    font-family: var(--sans);
+  }
+  .search:focus { border-color: var(--blood); }
+  [data-theme="paper"] .topbar { background: color-mix(in srgb, var(--bg) 88%, transparent); }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="logo">夜谭<small>把说不出口的经历，留在这里</small></div>
+    <div class="spacer"></div>
+    <button class="btn-icon" id="theme" title="切换主题" aria-label="切换主题">◐</button>
+  </div>
+</header>
+
+<main class="wrap" id="app"></main>
+
+<footer class="foot wrap">
+  记录，不背书 · 不提供驱邪 / 占卜 / 治病服务<br>
+  这是一个静态演示站，内容为示例数据
+</footer>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
